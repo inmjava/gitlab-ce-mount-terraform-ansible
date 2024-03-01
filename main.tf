@@ -81,19 +81,20 @@ resource "google_compute_instance" "gitlab-instance" {
     ssh-keys = local.ssh-keys
   }
 
-  #provisioner "remote-exec" {
-  #  inline = [
-  #    "curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash"
-  #  ]
+  provisioner "remote-exec" {
+    inline = ["echo 'Aguardar até que o SSH esteja pronto'"]
 
-  #  connection {
-  #    type        = "ssh"
-  #    user        = local.ssh_user
-  #    private_key = file(local.private_key_path)
-  #    host        = google_compute_instance.gitlab-instance.network_interface.0.access_config.0.nat_ip
-  #  }
-  #}
+    connection {
+      type        = "ssh"
+      user        = local.ssh_user
+      private_key = file(local.private_key_path)
+      host        = google_compute_instance.gitlab-instance.network_interface.0.access_config.0.nat_ip
+    }
+  }
 
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${google_compute_instance.gitlab-instance.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} install-gitlab-ce.yaml -u ${local.ssh_user}"
+  }
 }
 
 output "ssh-connection" {
@@ -102,4 +103,8 @@ output "ssh-connection" {
 
 output "execute-playbook" {
   value = "ansible-playbook -i ${google_compute_instance.gitlab-instance.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} install-gitlab-ce.yaml -u ${local.ssh_user}"
+}
+
+output "gitlab-ce-url" {
+  value = "http://${google_compute_instance.gitlab-instance.network_interface.0.access_config.0.nat_ip}/"
 }
