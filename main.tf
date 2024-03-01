@@ -58,7 +58,7 @@ resource "google_compute_firewall" "gitlab-ce-https-8443-access" {
 
 resource "google_compute_instance" "gitlab-instance" {
   name         = "gitlab-ce"
-  machine_type = "e2-micro"
+  machine_type = "e2-standard-2"
   zone         = "us-central1-c"
 
   boot_disk {
