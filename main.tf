@@ -2,7 +2,7 @@ locals {
   project_id       = "copelcicd"
   region           = "us-central1"
   network          = "default"
-  image            = "centos-stream-9-v20240213"
+  image            = "debian-12-bookworm-v20240213"
   ssh_user         = "ivan"
   private_key_path = "~/gitlab-ce-mount/ivankey"
   ssh-keys         = "ivan:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7QfP2cCVq98FIEfrahlMUnBUW8KlF4Cs6twE4NZ6SWtkbBtW/UPE/oyAceFaBPsvADCG+jPXOhjfW/jeOBF/hBYdgGX2igXJF+Lg0AW4+Fi97KY4s+WhA4tEaUxVGuGi+r28sIAcsmi8Rgs5eiMZSt7EPVchqjNL8hqCidcwNLIFON8Zi1UUqjdlIwCYwW3EYCWYLPcZaH/D3n5IT0DSvMq2ZTSNR5B8b/ORGex9vsQQ06iALz5FrOsTLajKnaFTcNlfu5g/OPxEc/1Q63uz368KlLCVieeTCuRP0RkGsTUFDfPSU6zTGeVj4LYDtlQ3sbDj0n8bsbduWhKUmQprH ivan"
