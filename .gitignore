@@ -4,6 +4,8 @@ terra.out
 terraformaws.txt
 **/.terraform/*
 
+key.json
+
 # .tfstate files
 *.tfstate
 *.tfstate.*

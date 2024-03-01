@@ -4,13 +4,22 @@ locals {
   network          = "default"
   image            = "debian-12-bookworm-v20240213"
   ssh_user         = "ivan"
-  private_key_path = "~/gitlab-ce-mount/ivankey"
+  private_key_path = "./ivankey"
   ssh-keys         = "ivan:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7QfP2cCVq98FIEfrahlMUnBUW8KlF4Cs6twE4NZ6SWtkbBtW/UPE/oyAceFaBPsvADCG+jPXOhjfW/jeOBF/hBYdgGX2igXJF+Lg0AW4+Fi97KY4s+WhA4tEaUxVGuGi+r28sIAcsmi8Rgs5eiMZSt7EPVchqjNL8hqCidcwNLIFON8Zi1UUqjdlIwCYwW3EYCWYLPcZaH/D3n5IT0DSvMq2ZTSNR5B8b/ORGex9vsQQ06iALz5FrOsTLajKnaFTcNlfu5g/OPxEc/1Q63uz368KlLCVieeTCuRP0RkGsTUFDfPSU6zTGeVj4LYDtlQ3sbDj0n8bsbduWhKUmQprH ivan"
+  credentials_path = "./key.json"
 }
 
 provider "google" {
   project = local.project_id
   region  = local.region
+  credentials = file(local.credentials_path)
+}
+
+terraform {
+ backend "gcs" {
+   bucket  = "terraform-state-bucket-tfstate-bad654f1039c029d"
+   prefix  = "terraform/gitlab-ce-creation"
+ }
 }
 
 resource "google_service_account" "gitlab-ce-sa" {
