@@ -52,6 +52,19 @@ resource "google_compute_firewall" "gitlab-ce-https-access" {
   target_service_accounts = [google_service_account.gitlab-ce-sa.email]
 }
 
+resource "google_compute_firewall" "gitlab-ce-http8080-access" {
+  name    = "gitlab-ce-http8080-access"
+  network = local.network
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  source_ranges           = ["0.0.0.0/0"]
+  target_service_accounts = [google_service_account.gitlab-ce-sa.email]
+}
+
 resource "google_compute_firewall" "gitlab-ce-https-8443-access" {
   name    = "gitlab-ce-https-8443-access"
   network = local.network
